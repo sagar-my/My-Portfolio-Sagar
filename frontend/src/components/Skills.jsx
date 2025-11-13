@@ -119,6 +119,7 @@ const Skills = () => {
                     ))}
                   </div>
                 </Card>
+                </AnimatedSection>
               );
             })}
           </div>
