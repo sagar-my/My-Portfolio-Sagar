@@ -4,34 +4,41 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { ExternalLink, Award } from 'lucide-react';
 import { portfolioData } from '../data/mock';
+import AnimatedSection from './AnimatedSection';
 
 const Projects = () => {
   return (
     <section id="projects" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-4">
-            Projects
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto mb-12"></div>
+          <AnimatedSection animation="fade-up">
+            <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-4">
+              Projects
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto mb-12"></div>
+          </AnimatedSection>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioData.projects.map((project) => (
-              <Card 
-                key={project.id} 
-                className="overflow-hidden hover:shadow-2xl transition-all duration-300 group cursor-pointer"
+            {portfolioData.projects.map((project, index) => (
+              <AnimatedSection 
+                key={project.id}
+                animation="scale"
+                delay={index * 100}
               >
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.name}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Badge className="absolute top-4 right-4 bg-blue-600 text-white">
-                    {project.year}
-                  </Badge>
-                </div>
+                <Card 
+                  className="card-3d overflow-hidden hover:shadow-2xl transition-all duration-300 group cursor-pointer h-full flex flex-col"
+                >
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={project.image} 
+                      alt={project.name}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <Badge className="absolute top-4 right-4 bg-blue-600 text-white">
+                      {project.year}
+                    </Badge>
+                  </div>
                 
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
