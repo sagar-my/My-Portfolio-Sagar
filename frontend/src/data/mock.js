@@ -1,12 +1,13 @@
 export const portfolioData = {
   personal: {
     name: "Sagar Chaudhary",
-    title: "Quality Assurance Associate",
+    title: "Software Automation Engineer",
     email: "sagar.chaudhary25008@gmail.com",
     phone: "+91-8171004874",
     linkedin: "sagarchaudhary05",
     github: "sagar-my",
-    summary: "Quality Assurance Associate with experience in mobile and web application testing, automation using Appium, Playwright, and Cucumber, and strong expertise in programming with Java, JavaScript, and C. Skilled in regression, ad-hoc, and UAT testing, with a proven track record of enhancing software quality, optimizing performance, and collaborating with cross-functional teams. Passionate about implementing scalable test frameworks and improving testing efficiency.",
+    profileImage: "https://customer-assets.emergentagent.com/job_resume-spotlight-35/artifacts/vmbt6hqn_shared%20image%20%281%29.jpg",
+    summary: "Software Automation Engineer with expertise in mobile and web application testing, automation using Appium, Playwright, Selenium, and Cucumber. Strong programming skills in Java, JavaScript, and C with a proven track record of building scalable test frameworks, enhancing software quality, and improving testing efficiency. Passionate about automation and delivering high-quality software solutions.",
     resumeUrl: "/resume.pdf"
   },
   
