@@ -95,30 +95,30 @@ const Skills = () => {
                   <Card 
                     className="card-3d p-6 hover:shadow-2xl transition-all duration-300 bg-white h-full"
                   >
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${
-                    category.color === 'blue' 
-                      ? 'from-blue-600 to-blue-700' 
-                      : 'from-cyan-600 to-cyan-700'
-                  } flex items-center justify-center mb-4`}>
-                    <IconComponent className="h-6 w-6 text-white" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">
-                    {category.title}
-                  </h3>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, skillIndex) => (
-                      <Badge 
-                        key={skillIndex} 
-                        variant="outline"
-                        className="hover:bg-blue-50 transition-colors cursor-default"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </Card>
+                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${
+                      category.color === 'blue' 
+                        ? 'from-blue-600 to-blue-700' 
+                        : 'from-cyan-600 to-cyan-700'
+                    } flex items-center justify-center mb-4`}>
+                      <IconComponent className="h-6 w-6 text-white" />
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">
+                      {category.title}
+                    </h3>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {category.skills.map((skill, skillIndex) => (
+                        <Badge 
+                          key={skillIndex} 
+                          variant="outline"
+                          className="hover:bg-blue-50 transition-colors cursor-default"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </Card>
                 </AnimatedSection>
               );
             })}
