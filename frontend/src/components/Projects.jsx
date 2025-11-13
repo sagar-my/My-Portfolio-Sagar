@@ -69,13 +69,14 @@ const Projects = () => {
                   
                   <Button 
                     onClick={() => window.open(project.link, '_blank')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="magnetic-button w-full bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Project
                   </Button>
                 </div>
               </Card>
+              </AnimatedSection>
             ))}
           </div>
         </div>
