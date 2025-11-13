@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { ArrowDown, Github, Linkedin, Mail, Phone } from 'lucide-react';
 import { portfolioData } from '../data/mock';
+import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
   const [displayedText, setDisplayedText] = useState('');
