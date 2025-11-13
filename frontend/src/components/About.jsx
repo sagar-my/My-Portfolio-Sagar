@@ -67,30 +67,30 @@ const About = () => {
             <div className="space-y-6">
               <AnimatedSection animation="slide-left" delay={100}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Testing Expertise</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">Automation Expertise</h4>
                   <p className="text-slate-600">
-                    Specialized in comprehensive testing methodologies including regression, ad-hoc, and UAT testing. 
-                    Proficient in automation frameworks like Appium, Playwright, and Cucumber.
+                    Expert in building scalable automation frameworks using Appium, Playwright, Selenium, and Cucumber. 
+                    Specialized in Page Object Model, Data-driven testing, and BDD approaches for maintainable test suites.
                   </p>
                 </Card>
               </AnimatedSection>
               
               <AnimatedSection animation="slide-left" delay={200}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-cyan-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Development Skills</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">Programming & Development</h4>
                   <p className="text-slate-600">
-                    Strong programming foundation in Java, JavaScript, and C. Experience in full-stack development 
-                    with Node.js, Express.js, and modern web technologies.
+                    Strong programming foundation in Java, JavaScript, and C. Experience in developing custom automation 
+                    utilities, API testing frameworks, and CI/CD pipeline integration with Jenkins and GitHub Actions.
                   </p>
                 </Card>
               </AnimatedSection>
               
               <AnimatedSection animation="slide-left" delay={300}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Continuous Learning</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">Innovation & Learning</h4>
                   <p className="text-slate-600">
-                    Currently expanding skillset with Selenium with Java. Active on LeetCode with a rating of 1482, 
-                    continuously improving problem-solving and algorithmic skills.
+                    Continuously exploring cutting-edge automation tools and techniques. Active on LeetCode (Rating: 1482), 
+                    solving complex algorithmic problems to enhance problem-solving and optimization skills.
                   </p>
                 </Card>
               </AnimatedSection>
