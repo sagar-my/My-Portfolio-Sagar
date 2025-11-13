@@ -7,16 +7,16 @@ import AnimatedCounter from './AnimatedCounter';
 
 const About = () => {
   const highlights = [
-    "98% Issue Resolution Rate",
-    "Mobile & Web Testing Expert",
-    "Automation Specialist",
-    "Cross-functional Collaboration"
+    "98% Test Automation Coverage",
+    "Mobile & Web Automation Expert",
+    "Framework Architecture Specialist",
+    "CI/CD Integration Expert"
   ];
 
   const stats = [
-    { value: 98, suffix: '%', label: 'Issue Resolution' },
-    { value: 3, suffix: '+', label: 'Projects Completed' },
-    { value: 15, suffix: '%', label: 'Stability Improvement' },
+    { value: 95, suffix: '%', label: 'Automation Coverage' },
+    { value: 3, suffix: '+', label: 'Frameworks Built' },
+    { value: 30, suffix: '%', label: 'Efficiency Improvement' },
     { value: 1482, suffix: '', label: 'LeetCode Rating' }
   ];
 
