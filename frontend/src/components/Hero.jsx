@@ -64,7 +64,7 @@ const Hero = () => {
             <Button 
               onClick={() => scrollToSection('contact')} 
               size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+              className="magnetic-button bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
               <Mail className="mr-2 h-5 w-5" />
               Get In Touch
@@ -73,7 +73,7 @@ const Hero = () => {
               onClick={() => window.open(portfolioData.personal.resumeUrl, '_blank')} 
               variant="outline" 
               size="lg"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+              className="magnetic-button border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
               Download Resume
             </Button>
