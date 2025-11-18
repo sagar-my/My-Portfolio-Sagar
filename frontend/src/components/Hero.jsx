@@ -32,7 +32,7 @@ const Hero = () => {
   };
 
   const handleResumeClick = () => {
-    alert('Resume available upon request.');
+    window.open(portfolioData.personal.resumeUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
