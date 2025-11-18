@@ -31,6 +31,10 @@ const Hero = () => {
     }
   };
 
+  const handleResumeClick = () => {
+    alert('Resume available upon request.');
+  };
+
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
       <ParticleBackground />
@@ -83,7 +87,7 @@ const Hero = () => {
                   Get In Touch
                 </Button>
                 <Button 
-                  onClick={() => window.open(portfolioData.personal.resumeUrl, '_blank')} 
+                  onClick={handleResumeClick} 
                   variant="outline" 
                   size="lg"
                   className="magnetic-button border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-2xl bg-transparent"
