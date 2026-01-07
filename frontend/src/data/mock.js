@@ -51,6 +51,32 @@ export const portfolioData = {
   projects: [
     {
       id: 1,
+      name: "Portfolio Website",
+      description: "Built a fast, responsive portfolio website using React + Vite with optimized performance and reusable UI components. Implemented mobile-first design, ensuring cross-browser compatibility and smooth user experience.",
+      technologies: ["React", "Vite", "Tailwind CSS", "JavaScript"],
+      achievements: [
+        "Built a fast, responsive portfolio website using React + Vite with optimized performance and reusable UI components",
+        "Implemented mobile-first design, ensuring cross-browser compatibility and smooth user experience"
+      ],
+      year: 2025,
+      link: "https://github.com/sagar-my",
+      image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80"
+    },
+    {
+      id: 2,
+      name: "Selenium Automation Demo Project",
+      description: "Developed an automation framework using Java + Selenium WebDriver, improving regression testing speed and accuracy.",
+      technologies: ["Java", "Selenium WebDriver", "TestNG", "Maven"],
+      achievements: [
+        "Developed an automation framework using Java + Selenium WebDriver",
+        "Improved regression testing speed and accuracy"
+      ],
+      year: 2025,
+      link: "https://github.com/sagar-my/saucedemo-automation-test",
+      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80"
+    },
+    {
+      id: 3,
       name: "E-notes",
       description: "A dynamic note-taking application with real-time user interaction capabilities.",
       technologies: ["Node.js", "Express.js", "HTML", "CSS", "JavaScript"],
@@ -63,7 +89,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80"
     },
     {
-      id: 2,
+      id: 4,
       name: "Fee Management System",
       description: "Comprehensive fee management solution with full CRUD functionality.",
       technologies: ["Java Servlets", "JSP", "HTML", "CSS", "JavaScript", "MySQL"],
@@ -76,7 +102,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
     },
     {
-      id: 3,
+      id: 5,
       name: "Job Portal System",
       description: "Full-featured job portal with separate dashboards for Admin, Job Seekers, and Providers.",
       technologies: ["Java Servlets", "JSP", "HTML", "CSS", "JavaScript"],

@@ -70,7 +70,7 @@ const Hero = () => {
     };
   }, []);
 
-  // Animated background effect
+  // Animated background effect with enhanced particles
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -78,6 +78,7 @@ const Hero = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let particles = [];
+    let time = 0;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -87,14 +88,24 @@ const Hero = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
+    const colors = [
+      { r: 59, g: 130, b: 246 },   // blue-500
+      { r: 6, g: 182, b: 212 },    // cyan-500
+      { r: 139, g: 92, b: 246 },   // purple-500
+      { r: 99, g: 102, b: 241 }    // indigo-500
+    ];
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.3 + 0.1;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.speedY = (Math.random() - 0.5) * 0.8;
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.pulseSpeed = Math.random() * 0.02 + 0.01;
+        this.pulsePhase = Math.random() * Math.PI * 2;
       }
 
       update() {
@@ -105,10 +116,21 @@ const Hero = () => {
         if (this.x < 0) this.x = canvas.width;
         if (this.y > canvas.height) this.y = 0;
         if (this.y < 0) this.y = canvas.height;
+
+        // Pulsing effect
+        this.pulsePhase += this.pulseSpeed;
+        this.currentOpacity = this.opacity + Math.sin(this.pulsePhase) * 0.2;
       }
 
       draw() {
-        ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+        const gradient = ctx.createRadialGradient(
+          this.x, this.y, 0,
+          this.x, this.y, this.size * 2
+        );
+        gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.currentOpacity})`);
+        gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+        
+        ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -117,30 +139,47 @@ const Hero = () => {
 
     const init = () => {
       particles = [];
-      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 12000);
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 8000);
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push(new Particle());
       }
     };
 
     const animate = () => {
+      time += 0.01;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Animated gradient background
+      const gradient = ctx.createLinearGradient(
+        canvas.width * (0.5 + Math.sin(time) * 0.3),
+        canvas.height * (0.5 + Math.cos(time) * 0.3),
+        canvas.width * (0.5 - Math.sin(time) * 0.3),
+        canvas.height * (0.5 - Math.cos(time) * 0.3)
+      );
+      gradient.addColorStop(0, `rgba(59, 130, 246, ${0.1 + Math.sin(time) * 0.05})`);
+      gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.1 + Math.cos(time * 0.7) * 0.05})`);
+      gradient.addColorStop(1, `rgba(139, 92, 246, ${0.1 + Math.sin(time * 1.3) * 0.05})`);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
         particle.update();
         particle.draw();
       });
 
-      // Draw connecting lines
+      // Draw connecting lines with animated colors
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - distance / 100)})`;
-            ctx.lineWidth = 0.5;
+          if (distance < 120) {
+            const opacity = (0.2 * (1 - distance / 120)) * (0.8 + Math.sin(time + i) * 0.2);
+            const colorIndex = Math.floor((time + i) % colors.length);
+            const color = colors[colorIndex];
+            ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`;
+            ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -174,19 +213,30 @@ const Hero = () => {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none"
-        style={{ opacity: 0.6 }}
+        style={{ opacity: 0.8 }}
       />
       
-      {/* Geometric pattern overlay */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, #1e293b 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }}></div>
+      {/* Animated gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
       </div>
       
-      {/* Subtle gradient on right */}
-      <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-purple-100/20 to-transparent"></div>
+      {/* Animated geometric pattern overlay */}
+      <div className="absolute inset-0 opacity-10">
+        <div 
+          className="absolute inset-0 animate-pulse-slow animate-float-pattern" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, #3b82f6 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}
+        ></div>
+      </div>
+      
+      {/* Animated gradient overlays */}
+      <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-purple-200/30 via-blue-200/20 to-transparent animate-gradient-shift"></div>
+      <div className="absolute left-0 bottom-0 w-1/3 h-full bg-gradient-to-r from-cyan-200/30 via-blue-200/20 to-transparent animate-gradient-shift-reverse"></div>
       
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="max-w-6xl mx-auto">
@@ -195,7 +245,7 @@ const Hero = () => {
             <div className="text-left animate-fade-in-up order-2 md:order-1">
               <p className="text-blue-600 text-xl md:text-2xl font-semibold mb-4 tracking-wide">Hi There,</p>
               <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-4">
-                I'm {firstName} <span className="text-orange-500">{lastName}</span>
+                I'm {firstName} <span className="text-blue-500">{lastName}</span>
               </h1>
               
               <div className="h-20 mb-8">
