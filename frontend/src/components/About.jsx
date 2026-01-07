@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from './ui/card';
-import { CheckCircle } from 'lucide-react';
+import { Button } from './ui/button';
+import { CheckCircle, Download } from 'lucide-react';
 import { portfolioData } from '../data/mock';
 import AnimatedSection from './AnimatedSection';
 import AnimatedCounter from './AnimatedCounter';
@@ -19,6 +20,12 @@ const About = () => {
     { value: 30, suffix: '%', label: 'Efficiency Improvement' },
     { value: 1482, suffix: '', label: 'LeetCode Rating' }
   ];
+
+  const handleResumeClick = () => {
+    // URL encode the resume path to handle spaces and special characters
+    const encodedUrl = encodeURI(portfolioData.personal.resumeUrl);
+    window.open(encodedUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <section id="about" className="py-20 bg-white">
@@ -53,7 +60,7 @@ const About = () => {
                   {portfolioData.personal.summary}
                 </p>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 mb-6">
                   {highlights.map((highlight, index) => (
                     <div key={index} className="flex items-center gap-3 stagger-item" style={{ animationDelay: `${index * 100}ms` }}>
                       <CheckCircle className="h-5 w-5 text-blue-600 flex-shrink-0" />
@@ -61,6 +68,14 @@ const About = () => {
                     </div>
                   ))}
                 </div>
+                
+                <Button 
+                  onClick={handleResumeClick}
+                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Resume
+                </Button>
               </Card>
             </AnimatedSection>
             

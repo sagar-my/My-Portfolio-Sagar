@@ -1,27 +1,164 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
-import { ArrowDown, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { portfolioData } from '../data/mock';
-import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
   const [displayedText, setDisplayedText] = useState('');
-  const fullText = portfolioData.personal.title;
   const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const canvasRef = useRef(null);
 
+  // Roles to cycle through
+  const roles = [
+    'Software Automation Engineer',
+    'Automation Engineer',
+    'QA Testing',
+    'QA Automation'
+  ];
+
+  // Split name into first and last
+  const nameParts = portfolioData.personal.name.split(' ');
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(' ');
+
+  // Typing animation with loop
   useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayedText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        setIsTypingComplete(true);
-        clearInterval(typingInterval);
-      }
-    }, 100);
+    const stateRef = {
+      currentRoleIndex: 0,
+      currentIndex: 0,
+      isDeleting: false,
+      pauseCount: 0
+    };
 
-    return () => clearInterval(typingInterval);
+    const typeText = () => {
+      const currentRole = roles[stateRef.currentRoleIndex];
+      
+      if (!stateRef.isDeleting) {
+        // Typing phase
+        if (stateRef.currentIndex <= currentRole.length) {
+          setDisplayedText(currentRole.slice(0, stateRef.currentIndex));
+          setIsTypingComplete(false);
+          stateRef.currentIndex++;
+        } else {
+          // Finished typing, pause for 20 intervals (2 seconds at 100ms)
+          stateRef.pauseCount++;
+          setIsTypingComplete(true);
+          if (stateRef.pauseCount >= 10) {
+            stateRef.pauseCount = 0;
+            stateRef.isDeleting = true;
+          }
+        }
+      } else {
+        // Deleting phase
+        if (stateRef.currentIndex >= 0) {
+          setDisplayedText(currentRole.slice(0, stateRef.currentIndex));
+          setIsTypingComplete(false);
+          stateRef.currentIndex--;
+        } else {
+          // Finished deleting, move to next role
+          stateRef.isDeleting = false;
+          stateRef.currentRoleIndex = (stateRef.currentRoleIndex + 1) % roles.length;
+          stateRef.currentIndex = 0;
+        }
+      }
+    };
+
+    const typingInterval = setInterval(typeText, 100);
+
+    return () => {
+      clearInterval(typingInterval);
+    };
+  }, []);
+
+  // Animated background effect
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const init = () => {
+      particles = [];
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 12000);
+      for (let i = 0; i < numberOfParticles; i++) {
+        particles.push(new Particle());
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      // Draw connecting lines
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - distance / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    init();
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const scrollToSection = (id) => {
@@ -31,106 +168,110 @@ const Hero = () => {
     }
   };
 
-  const handleResumeClick = () => {
-    window.open(portfolioData.personal.resumeUrl, '_blank', 'noopener,noreferrer');
-  };
-
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
-      <ParticleBackground />
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-white relative overflow-hidden">
+      {/* Animated background canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{ opacity: 0.6 }}
+      />
       
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-cyan-600/20 animate-gradient"></div>
+      {/* Geometric pattern overlay */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, #1e293b 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}></div>
+      </div>
+      
+      {/* Subtle gradient on right */}
+      <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-purple-100/20 to-transparent"></div>
       
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left side - Photo */}
-            <div className="flex justify-center md:justify-end animate-fade-in">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl blur-2xl opacity-50 animate-pulse-glow"></div>
-                <img 
-                  src={portfolioData.personal.profileImage}
-                  alt={portfolioData.personal.name}
-                  className="relative w-80 h-80 object-cover rounded-2xl shadow-2xl border-4 border-white/10 animate-float"
-                />
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full opacity-20 blur-3xl"></div>
-              </div>
-            </div>
-            
-            {/* Right side - Text content */}
-            <div className="text-left animate-fade-in-up">
-              <p className="text-cyan-400 text-lg font-semibold mb-3 tracking-wide">Hello, I'm</p>
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                {portfolioData.personal.name}
+            {/* Left side - Text content */}
+            <div className="text-left animate-fade-in-up order-2 md:order-1">
+              <p className="text-blue-600 text-xl md:text-2xl font-semibold mb-4 tracking-wide">Hi There,</p>
+              <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-4">
+                I'm {firstName} <span className="text-orange-500">{lastName}</span>
               </h1>
               
-              <div className="h-16 mb-6">
-                <p className="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  {displayedText}
-                  {!isTypingComplete && <span className="animate-pulse text-cyan-400">|</span>}
+              <div className="h-20 mb-8">
+                <p className="text-2xl md:text-3xl font-semibold text-slate-800">
+                  I Am Into <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">{displayedText}</span>
+                  {!isTypingComplete && <span className="animate-pulse bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">|</span>}
                 </p>
               </div>
               
-              <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-                Building robust automation frameworks and ensuring software quality through comprehensive testing strategies. Specialized in end-to-end automation solutions.
-              </p>
-              
-              <div className="flex flex-wrap gap-4 mb-8">
+              <div className="mb-8">
                 <Button 
-                  onClick={() => scrollToSection('contact')} 
+                  onClick={() => scrollToSection('about')} 
                   size="lg"
-                  className="magnetic-button bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-2xl border-0"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full transition-all duration-300 shadow-lg hover:shadow-xl border-0 flex items-center gap-2"
                 >
-                  <Mail className="mr-2 h-5 w-5" />
-                  Get In Touch
-                </Button>
-                <Button 
-                  onClick={handleResumeClick} 
-                  variant="outline" 
-                  size="lg"
-                  className="magnetic-button border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 px-8 py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-2xl bg-transparent"
-                >
-                  Download Resume
+                  About Me
+                  <ArrowDown className="h-5 w-5" />
                 </Button>
               </div>
               
               <div className="flex gap-4">
                 <a 
-                  href={`https://github.com/${portfolioData.personal.github}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600"
-                >
-                  <Github className="h-6 w-6" />
-                </a>
-                <a 
                   href={`https://linkedin.com/in/${portfolioData.personal.linkedin}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600"
+                  className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110"
                 >
                   <Linkedin className="h-6 w-6" />
                 </a>
                 <a 
+                  href={`https://github.com/${portfolioData.personal.github}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110"
+                >
+                  <Github className="h-6 w-6" />
+                </a>
+                <a 
                   href={`mailto:${portfolioData.personal.email}`}
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600"
+                  className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110"
                 >
                   <Mail className="h-6 w-6" />
                 </a>
                 <a 
                   href={`tel:${portfolioData.personal.phone}`}
-                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110 text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-600"
+                  className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-110"
                 >
-                  <Phone className="h-6 w-6" />
+                  <MessageCircle className="h-6 w-6" />
                 </a>
               </div>
             </div>
-          </div>
-          
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ArrowDown className="h-8 w-8 text-cyan-400" />
+            
+            {/* Right side - Circular Avatar */}
+            <div className="flex justify-center md:justify-start animate-fade-in order-1 md:order-2">
+              <div className="relative group">
+                {/* Animated glow effect on hover */}
+                <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-0 group-hover:opacity-60 blur-2xl transition-opacity duration-500 animate-pulse"></div>
+                
+                <div className="relative w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-cyan-500/50 group-hover:border-cyan-200 group-hover:border-purple-200">
+                  {/* Rotating gradient overlay on hover */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-spin-slow pointer-events-none"></div>
+                  
+                  <img 
+                    src={portfolioData.personal.profileImage}
+                    alt={portfolioData.personal.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 relative z-10"
+                  />
+                </div>
+                
+                {/* Floating particles effect on hover */}
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-500 shadow-lg"></div>
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-500 delay-100 shadow-lg"></div>
+                <div className="absolute top-1/2 -left-4 w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-500 delay-200 shadow-lg"></div>
+                <div className="absolute top-1/4 -right-4 w-2.5 h-2.5 bg-cyan-300 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-500 delay-300 shadow-lg"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

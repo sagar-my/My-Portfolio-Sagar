@@ -8,22 +8,28 @@ export const portfolioData = {
     github: "sagar-my",
     profileImage: "https://customer-assets.emergentagent.com/job_resume-spotlight-35/artifacts/vmbt6hqn_shared%20image%20%281%29.jpg",
     summary: "Software Automation Engineer with expertise in mobile and web application testing, automation using Appium, Playwright, Selenium, and Cucumber. Strong programming skills in Java, JavaScript, and C with a proven track record of building scalable test frameworks, enhancing software quality, and improving testing efficiency. Passionate about automation and delivering high-quality software solutions.",
-    resumeUrl: "/SagarChaudharyResume-3.pdf"
+    resumeUrl: "/SagarChaudharyResume (3).pdf"
   },
   
   experience: [
     {
       id: 1,
-      title: "QA Associate",
+      title: "QA Associate – Manual & Automation Testing",
       company: "Mechlin Technology Ptv Ltd",
       location: "Kota, Rajasthan",
       type: "Full-Time",
+      duration: "1 Year",
       startDate: "Dec 2024",
       endDate: "Present",
       current: true,
+      applicationType: "Mobile & Web Applications",
       responsibilities: [
-        "Executed comprehensive software testing, identifying and resolving 98% of reported issues, significantly enhancing product quality and user experience.",
-        "Collaborated with cross-functional teams to deliver timely, high-quality product"
+        "Performed end-to-end testing for mobile and web apps, achieving a 98% defect resolution rate and improving overall product stability by 30%.",
+        "Implemented automation scripts with Appium, Cucumber, Playwright, JavaScript/TypeScript, resulting in a 40% increase in automation coverage and a 35% decrease in manual testing effort.",
+        "Conducted functional, regression, UAT, smoke, ad-hoc, and monkey testing, increasing defect detection rates by 25% in the early stages of software development.",
+        "Collaborated with developers, QA Leads, and Product Owners to contribute towards 20% faster release cycles. Enhanced the coordination of teams in general.",
+        "Proactively identified and validated critical defects early in the QA cycle, reduced production issues by 28%.",
+        "Supported QA process improvements through refining workflows and contributing to CI/CD-based automation, thus increasing testing efficiency by 30%."
       ],
       projects: [
         {
@@ -85,21 +91,20 @@ export const portfolioData = {
   ],
   
   skills: {
-    programmingLanguages: ["C", "Java", "JavaScript"],
-    frameworksLibraries: ["Node.js", "Express.js", "Playwright", "Tailwind CSS", "Bootstrap"],
+    programmingLanguages: ["C", "Java Programming"],
+    frameworksLibraries: ["Node.js", "Express.js", "Playwright (JavaScript)", "Tailwind CSS", "Bootstrap"],
     testingAutomation: [
       "Mobile App Testing (Android & iOS)",
-      "Web Application Testing",
       "Ad-hoc Testing",
       "Regression Testing",
-      "Automation Scripting (Appium)",
-      "Playwright",
+      "Automation Scripting using Appium (Mobile Automation) and Playwright",
       "Cucumber / BDD Framework",
-      "Selenium with Java (Learning)"
+      "Writing Reusable Test Scripts",
+      "Currently learning Selenium with Java"
     ],
-    toolsPlatforms: ["Visual Studio Code", "Git", "GitHub", "Browser Stack", "Jira", "Asana"],
+    toolsPlatforms: ["Visual Studio Code", "Git", "GitHub", "Browser Stack", "Jira", "Assana"],
     databases: ["MySQL", "PHP MariaDB"],
-    softSkills: ["Strong Communication", "Team Leadership", "Problem Solving"]
+    softSkills: ["Strong Verbal and Written Communication", "Team Leadership"]
   },
   
   education: [

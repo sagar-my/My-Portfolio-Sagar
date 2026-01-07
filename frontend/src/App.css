@@ -288,3 +288,17 @@ button, a, .magnetic-button {
   transform: scale(1.05);
   transition: transform 0.2s ease;
 }
+
+/* Slow spin animation for avatar border */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}

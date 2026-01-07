@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
+import { portfolioData } from '../data/mock';
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
-      // Determine active section based on scroll position
-      const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'education', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+      // Determine active section based on scroll position - matching actual section order
+      const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'education', 'achievements', 'contact'];
+      const scrollPosition = window.scrollY + 150;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
@@ -39,7 +36,12 @@ const Header = () => {
     }
   };
 
+  // Get first name for logo
+  const firstName = portfolioData.personal.name.split(' ')[0];
+
+  // Nav items matching the actual order of sections in App.js
   const navItems = [
+    { label: 'Home', id: 'hero' },
     { label: 'About', id: 'about' },
     { label: 'Experience', id: 'experience' },
     { label: 'Projects', id: 'projects' },
@@ -49,41 +51,56 @@ const Header = () => {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20 py-3'
-          : 'bg-transparent py-5'
-        }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
       <nav className="container mx-auto px-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo with hexagon icon */}
           <button
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              setActiveSection('');
+              setActiveSection('hero');
             }}
-            className="relative group"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg opacity-0 group-hover:opacity-20 transition duration-500 blur-lg"></div>
-            <span className="relative text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 inline-block">
-              SC
+            {/* Hexagon with initials */}
+            <div className="relative w-10 h-10 flex items-center justify-center">
+              <svg
+                className="w-full h-full text-slate-900"
+                viewBox="0 0 100 100"
+                fill="currentColor"
+              >
+                <polygon
+                  points="50,5 90,25 90,75 50,95 10,75 10,25"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                />
+              </svg>
+              <span className="absolute text-sm font-bold text-slate-900">
+                SC
+              </span>
+            </div>
+            <span className="text-xl font-bold text-slate-900">
+              {firstName}
             </span>
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${activeSection === item.id
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-cyan-600 shadow-md shadow-blue-500/25'
-                    : isScrolled
-                      ? 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
-                      : 'text-white/90 hover:text-white hover:bg-white/10'
-                  }`}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  activeSection === item.id
+                    ? 'text-blue-600'
+                    : 'text-slate-700 hover:text-slate-900'
+                }`}
               >
                 {item.label}
+                {activeSection === item.id && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></span>
+                )}
               </button>
             ))}
           </div>
@@ -91,27 +108,28 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${isScrolled ? 'text-slate-700 hover:bg-blue-50' : 'text-white hover:bg-white/10'
-              }`}
+            className="md:hidden p-2 rounded-lg transition-colors duration-300 text-slate-700 hover:bg-slate-100"
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
-          }`}>
-          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/20 space-y-2">
-            {navItems.map((item, index) => (
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="bg-white border-t border-slate-200 py-2 space-y-1">
+            {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                style={{ transitionDelay: `${index * 50}ms` }}
-                className={`block w-full text-left py-3 px-4 rounded-xl transition-all duration-300 transform ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
-                  } ${activeSection === item.id
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-cyan-600 shadow-md'
-                    : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
+                className={`block w-full text-left py-3 px-4 text-sm font-medium transition-colors duration-200 ${
+                  activeSection === item.id
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                }`}
               >
                 {item.label}
               </button>
