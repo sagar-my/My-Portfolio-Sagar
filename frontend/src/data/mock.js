@@ -8,7 +8,7 @@ export const portfolioData = {
     github: "sagar-my",
     profileImage: "https://customer-assets.emergentagent.com/job_resume-spotlight-35/artifacts/vmbt6hqn_shared%20image%20%281%29.jpg",
     summary: "Software Automation Engineer with expertise in mobile and web application testing, automation using Appium, Playwright, Selenium, and Cucumber. Strong programming skills in Java, JavaScript, and C with a proven track record of building scalable test frameworks, enhancing software quality, and improving testing efficiency. Passionate about automation and delivering high-quality software solutions.",
-    resumeUrl: "/SagarChaudharyResume (3).pdf"
+    resumeUrl: "https://drive.google.com/file/d/1Fvo0o-oN-o7wlGoe3k-7bS3toYMGyS2_/view?usp=sharing"
   },
   
   experience: [
