@@ -57,7 +57,7 @@ const Contact = () => {
                   Let's Connect
                 </h3>
                 <p className="text-slate-600 mb-8 leading-relaxed">
-                  I'm always interested in hearing about new opportunities, collaborations, or just a friendly chat about quality assurance and testing.
+                  I'm always interested in hearing about QA automation, mobile testing, AI-driven testing opportunities, or collaborations on Playwright and Appium projects.
                 </p>
                 
                 <div className="space-y-6">

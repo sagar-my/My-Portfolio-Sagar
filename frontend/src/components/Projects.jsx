@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { ExternalLink, Award } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { portfolioData } from '../data/mock';
 import AnimatedSection from './AnimatedSection';
 
@@ -26,7 +25,7 @@ const Projects = () => {
                 delay={index * 100}
               >
                 <Card 
-                  className="card-3d overflow-hidden hover:shadow-2xl transition-all duration-300 group cursor-pointer h-full flex flex-col transform hover:-translate-y-2"
+                  className="card-3d overflow-hidden hover:shadow-2xl transition-all duration-300 group h-full flex flex-col transform hover:-translate-y-2"
                 >
                   <div className="relative overflow-hidden">
                     <img 
@@ -34,23 +33,9 @@ const Projects = () => {
                       alt={project.name}
                       className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <Badge className="absolute top-4 right-4 bg-blue-600 text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110">
                       {project.year}
                     </Badge>
-                    <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button
-                        size="sm"
-                        className="bg-white/90 hover:bg-white text-blue-600 shadow-lg"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(project.link, '_blank');
-                        }}
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        View
-                      </Button>
-                    </div>
                   </div>
                 
                 <div className="p-6">
@@ -80,7 +65,7 @@ const Projects = () => {
                     </div>
                   </div>
                   
-                  <div className="mb-4 space-y-2">
+                  <div className="space-y-2">
                     {project.achievements.map((achievement, index) => (
                       <div key={index} className="flex gap-2 text-sm">
                         <Award className="h-4 w-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -88,14 +73,6 @@ const Projects = () => {
                       </div>
                     ))}
                   </div>
-                  
-                  <Button 
-                    onClick={() => window.open(project.link, '_blank')}
-                    className="magnetic-button w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View Project
-                  </Button>
                 </div>
               </Card>
               </AnimatedSection>

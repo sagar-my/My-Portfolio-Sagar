@@ -10,10 +10,10 @@ const Hero = () => {
 
   // Roles to cycle through
   const roles = [
-    'Software Automation Engineer',
-    'Automation Engineer',
-    'QA Testing',
-    'QA Automation'
+    'QA Automation Engineer',
+    'Software Tester',
+    'AI Agent Framework Developer',
+    'Playwright Automation'
   ];
 
   // Split name into first and last

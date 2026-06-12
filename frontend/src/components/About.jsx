@@ -8,17 +8,17 @@ import AnimatedCounter from './AnimatedCounter';
 
 const About = () => {
   const highlights = [
-    "98% Test Automation Coverage",
-    "Mobile & Web Automation Expert",
-    "Framework Architecture Specialist",
-    "CI/CD Integration Expert"
+    "QA Automation Engineer at Mechlin Technology Pvt. Ltd.",
+    "AI Agent Framework Developer — Playwright Automation Scripts",
+    "Mobile, Web & AI-Driven Automation Testing",
+    "Appium Mobile Testing — Real & Emulated Devices",
   ];
 
   const stats = [
-    { value: 95, suffix: '%', label: 'Automation Coverage' },
-    { value: 3, suffix: '+', label: 'Frameworks Built' },
-    { value: 30, suffix: '%', label: 'Efficiency Improvement' },
-    { value: 1482, suffix: '', label: 'LeetCode Rating' }
+    { text: 'AI Agent', label: 'Framework Developer — Playwright Automation' },
+    { value: 3, suffix: '+', label: 'Automation Frameworks Built' },
+    { value: 30, suffix: '%', label: 'Manual Effort Reduced' },
+    { text: 'Mobile', label: 'Appium & Cross-Platform Testing' }
   ];
 
   const handleResumeClick = () => {
@@ -43,8 +43,12 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
               {stats.map((stat, index) => (
                 <Card key={index} className="p-6 text-center hover:shadow-xl transition-shadow bg-gradient-to-br from-blue-50 to-cyan-50">
-                  <div className="text-4xl font-bold text-blue-600 mb-2">
-                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">
+                    {stat.text ? (
+                      <span>{stat.text}</span>
+                    ) : (
+                      <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                    )}
                   </div>
                   <div className="text-sm text-slate-600 font-medium">{stat.label}</div>
                 </Card>
@@ -56,9 +60,13 @@ const About = () => {
             <AnimatedSection animation="slide-right">
               <Card className="card-3d p-8 bg-gradient-to-br from-blue-50 to-cyan-50 border-0 shadow-xl">
                 <h3 className="text-2xl font-bold text-slate-900 mb-4">Professional Summary</h3>
-                <p className="text-slate-700 leading-relaxed mb-6">
-                  {portfolioData.personal.summary}
-                </p>
+                <div className="space-y-4 mb-6">
+                  {(portfolioData.personal.aboutParagraphs || [portfolioData.personal.summary]).map((paragraph, index) => (
+                    <p key={index} className="text-slate-700 leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
                 
                 <div className="space-y-3 mb-6">
                   {highlights.map((highlight, index) => (
@@ -82,30 +90,33 @@ const About = () => {
             <div className="space-y-6">
               <AnimatedSection animation="slide-left" delay={100}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Automation Expertise</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">AI & Automation Frameworks</h4>
                   <p className="text-slate-600">
-                    Expert in building scalable automation frameworks using Appium, Playwright, Selenium, and Cucumber. 
-                    Specialized in Page Object Model, Data-driven testing, and BDD approaches for maintainable test suites.
+                    I build scalable automation frameworks using Appium, Playwright, Cucumber, and AI Agents — 
+                    known for developing AI Agent frameworks powered by Playwright automation scripts. 
+                    Strong experience in CI/CD integration and cross-platform mobile and web testing.
                   </p>
                 </Card>
               </AnimatedSection>
               
               <AnimatedSection animation="slide-left" delay={200}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-cyan-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Programming & Development</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">Testing & Quality Assurance</h4>
                   <p className="text-slate-600">
-                    Strong programming foundation in Java, JavaScript, and C. Experience in developing custom automation 
-                    utilities, API testing frameworks, and CI/CD pipeline integration with Jenkins and GitHub Actions.
+                    Skilled in functional, regression, smoke, sanity, API, and ad-hoc testing for mobile and web apps. 
+                    I run automation on BrowserStack, GitHub Actions, and real/emulated Android devices to ensure 
+                    reliable, high-quality software delivery.
                   </p>
                 </Card>
               </AnimatedSection>
               
               <AnimatedSection animation="slide-left" delay={300}>
                 <Card className="card-3d p-6 hover:shadow-xl transition-shadow duration-300 border-l-4 border-blue-600">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3">Innovation & Learning</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-3">AI Automation & Growth</h4>
                   <p className="text-slate-600">
-                    Continuously exploring cutting-edge automation tools and techniques. Active on LeetCode (Rating: 1482), 
-                    solving complex algorithmic problems to enhance problem-solving and optimization skills.
+                    Passionate about improving test coverage and reducing manual effort through intelligent automation 
+                    and AI-powered testing workflows. Currently advancing skills in AI Automation, Mobile Automation 
+                    Framework Design, and modern QA engineering for fast-paced projects.
                   </p>
                 </Card>
               </AnimatedSection>

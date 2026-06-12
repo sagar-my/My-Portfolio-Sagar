@@ -15,7 +15,7 @@ const Footer = () => {
                 Sagar Chaudhary
               </h3>
               <p className="text-slate-400 leading-relaxed">
-                Quality Assurance Associate passionate about delivering exceptional software quality through comprehensive testing and automation.
+                QA Automation Engineer passionate about mobile, web, and AI-driven testing — building scalable automation with Playwright, Appium, and AI Agents.
               </p>
             </div>
             

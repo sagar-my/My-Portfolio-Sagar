@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { portfolioData } from '../data/mock';
-import { Code, Wrench, TestTube, Database, MessageSquare } from 'lucide-react';
+import { Code, Wrench, TestTube, Database, MessageSquare, Bot, GitBranch } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 
 const Skills = () => {
@@ -15,14 +15,26 @@ const Skills = () => {
     },
     {
       icon: Wrench,
-      title: "Frameworks & Libraries",
+      title: "Automation Frameworks & Libraries",
       skills: portfolioData.skills.frameworksLibraries,
       color: "cyan"
     },
     {
       icon: TestTube,
-      title: "Testing & Automation",
+      title: "Testing & Automation Skills",
       skills: portfolioData.skills.testingAutomation,
+      color: "blue"
+    },
+    {
+      icon: Bot,
+      title: "AI Automation Skills",
+      skills: portfolioData.skills.aiAutomation,
+      color: "cyan"
+    },
+    {
+      icon: GitBranch,
+      title: "CI/CD Integration",
+      skills: portfolioData.skills.cicdIntegration,
       color: "blue"
     },
     {
